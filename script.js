@@ -1,11 +1,14 @@
 let user = "";
 let userObj = { name: user };
-const chatRefresh = setInterval(getChat, 100);
-const statusRefresh = setInterval(online, 5000);
+const chatRefresh = setInterval(getChat, 3000);
+let statusRefresh = null;
+let chatHtml = document.querySelector(".chat");
+let chatApi = null;
 
 setTimeout(login, 2000);
 chatRefresh;
 
+//Connection and Reconnection
 function login() {
   user = prompt("Digite seu usuário");
   userObj = { name: user };
@@ -17,6 +20,7 @@ function login() {
 
 function sendStatus() {
   console.log("enviei login");
+  statusRefresh = setInterval(online, 5000);
   statusRefresh;
 }
 function online() {
@@ -36,6 +40,8 @@ function disconnected() {
   alert("Você foi desconectado");
   login();
 }
+
+//Send Message
 function send() {
   let msgText = document.querySelector("input").value;
   let msg = {
@@ -49,19 +55,33 @@ function send() {
   document.querySelector("input").value = "";
 }
 
+//Show messages
 function getChat() {
-  const promise = axios.get("https://mock-api.driven.com.br/api/v6/uol/messages");
-  promise.then(renderChat);
+  const getpromise = axios.get("https://mock-api.driven.com.br/api/v6/uol/messages");
+  getpromise.then(renderChat);
 }
 
-let allchat = document.querySelector(".chat");
-function renderChat(serverData) {
-  let chatFrom = "";
-  let chatTo = "";
-  let chatText = "";
-  let chatType = "";
-  const chatMsg = {chatFrom, chatTo, chatText, chatType};
-  /*for (n=0; n<serverData; n++){
+let chatTime = "";
+let chatFrom = "";
+let chatTo = "";
+let chatText = "";
+let chatType = "";
 
-  }*/
+function renderChat(getpromise) {
+  chatHtml.innertext = "";
+  chatApi = getpromise.data;
+  console.log(getpromise.data);
+
+  for (n = 0; n < chatApi.length; n++) {
+    chatTime = chatApi[n].time;
+    chatFrom = chatApi[n].from;
+    chatTo = chatApi[n].to;
+    chatText = chatApi[n].text;
+    chatType = chatApi[n].type;
+    chatHtml.innerhtml += `
+    <div class="msg-standard">
+      "${chatTime} ${chatFrom} to ${chatTo}: ${chatText}"
+      </div>
+    `;
+  }
 }

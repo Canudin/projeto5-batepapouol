@@ -29,6 +29,13 @@
   min-height: 800px;
   background-color: #F3F3F3;
 }
+.chat div{
+  height: auto;
+  padding: 8px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
 .msg-notify{
   background-color: #DCDCDC;
 }
