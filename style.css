@@ -25,6 +25,7 @@
   width: 45px;
 }
 .chat{
+  margin: 80px 0;
   min-height: 800px;
   background-color: #F3F3F3;
 }
@@ -36,6 +37,15 @@
 }
 .msg-private{
 background-color: #FFDEDE;
+}
+.msg-notify-self{
+  background-color: #DCDCDC;
+}
+.msg-standard-self{
+  background-color: #FFF;
+}
+.msg-private-self{
+  background-color: #FFDEDE;
 }
 .bottom{
   height: 80px;
