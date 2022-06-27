@@ -16,12 +16,11 @@ let msg = {
 let participants = [];
 
 //Start
-getChat();
-chatRefresh;
 setTimeout(login, 2000);
 
 //Connection and Reconnection
 function login() {
+  chatRefresh;
   user = prompt("Digite seu usuário");
   userObj = { name: user };
   const sendUser = axios.post("https://mock-api.driven.com.br/api/v6/uol/participants", userObj);
@@ -90,30 +89,34 @@ function renderChat(getpromise) {
     chatTo = chatApi[n].to;
     chatText = chatApi[n].text;
     chatType = chatApi[n].type;
-    participants.push(chatFrom);
-    renderParticipants();
-
     if (chatType === "private_message" && (chatTo !== user || chatFrom !== user)) {
       const lastMessage = document.querySelector(".chat").lastElementChild;
       lastMessage.scrollIntoView();
+    } else {
+      chatHtml.innerHTML += `
+        <div class="${chatType}">
+          <p>
+          <span class="time">${chatTime}</span>
+          <span class="name"> ${chatFrom}</span>
+          to 
+          <span class="name">${chatTo}</span>: ${chatText}
+          </p>
+        </div>  
+        `;
+      const lastMessage = document.querySelector(".chat").lastElementChild;
+      lastMessage.scrollIntoView();
     }
-    chatHtml.innerHTML += `
-    <div class="${chatType}">
-      <p>
-      <span class="time">${chatTime}</span>
-      <span class="name"> ${chatFrom}</span>
-      to 
-      <span class="name">${chatTo}</span>: ${chatText}
-      </p>
-    </div>  
-    `;
-    const lastMessage = document.querySelector(".chat").lastElementChild;
-    lastMessage.scrollIntoView();
   }
 }
 
-function renderParticipants() {
-  const menuParticipants = document.querySelector(".participants").innerHTML;
+function getParticipants() {
+  const participantsPromisse = axios.get("https://mock-api.driven.com.br/api/v6/uol/participants");
+  participantsPromisse.then(renderParticipants);
+}
+
+function renderParticipants(answer) {
+  const participants = answer.data;
+  const menuParticipants = document.querySelector(".participants");
   for (n = 0; n < participants.length; n++) {
     menuParticipants.innerHTML += `
     <div class="contact" onclick="msgPrivate()">
@@ -127,6 +130,7 @@ function renderParticipants() {
 function showMenu() {
   const menuButton = document.querySelector(".menu");
   menuButton.style.display = "flex";
+  getParticipants();
 }
 function showChat() {
   const menuButton = document.querySelector(".menu");
