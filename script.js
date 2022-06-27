@@ -128,14 +128,14 @@ function renderParticipants(answer) {
   `;
   for (n = 0; n < participants.length; n++) {
     menuParticipants.innerHTML += `
-    <div class="contact" onclick="msgPrivate()">
+    <div class="contact" onclick="msgPrivateTo(this)">
       <ion-icon name="person-circle"></ion-icon>
       <p>${participants[n].name}</p>
     </div>
     `;
   }
   menuParticipants.innerHTML += `
-  <div class=".visibility-title">
+  <div class="visibility-title">
   <p>Escolha a Visibilidade</p>
 </div>
 <div class="contact" onclick="msgTodos()">
@@ -159,7 +159,12 @@ function showChat() {
 }
 function msgTodos() {
   msgType = "message";
+  msgTo = "Todos";
 }
 function msgPrivate() {
   msgType = "private_message";
+}
+function msgPrivateTo(element) {
+  msgType = "private_message";
+  msgTo = element.querySelector("p").innerText;
 }
