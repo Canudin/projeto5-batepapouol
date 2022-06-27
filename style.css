@@ -1,77 +1,85 @@
 * {
   box-sizing: border-box;
   width: 375px;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
-.header{
+:root {
+  font-family: "Roboto", sans-serif;
+}
+
+.header {
   height: 80px;
-  background-color: #FFF;
-  box-shadow: 0px 4px 6px 0px #0000000D;
+  background-color: #fff;
+  box-shadow: 0px 4px 6px 0px #0000000d;
   position: fixed;
   top: 0px;
-  left: 0px;  
+  left: 0px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0px 20px;
 }
-.header img{
+.header img {
   width: 75px;
   height: 53px;
 }
-.header ion-icon{
+.header ion-icon {
   font-size: 45px;
   width: 45px;
 }
-.chat{
-  margin: 80px 0;
-  min-height: 800px;
-  background-color: #F3F3F3;
+.chat {
+  margin: 84px 0;
+  height: 100%;
+  background-color: #f3f3f3;
 }
-.chat div{
-  height: auto;
+.chat div {
   padding: 8px;
   font-size: 14px;
   display: flex;
   align-items: center;
-  margin-top: 5px;
+  margin-top: 4px;
   line-break: anywhere;
 }
-.status{
-  background-color: #DCDCDC;
+.status {
+  background-color: #dcdcdc;
 }
-.message{
-  background-color: #FFF;
+.message {
+  background-color: #fff;
 }
-.private_message{
-background-color: #FFDEDE;
+.private_message {
+  background-color: #ffdede;
 }
-.msg-notify-self{
-  background-color: #DCDCDC;
+.time {
+  width: 50px;
+  flex-shrink: 0;
+  color: #AAAAAA;
+  display: inline;
 }
-.msg-standard-self{
-  background-color: #FFF;
+.name {
+  width: auto;
+  color: #000000;
+  font-weight: bold;
 }
-.msg-private-self{
-  background-color: #FFDEDE;
+.msgText{
+  width: auto;
 }
-.bottom{
+.bottom {
   height: 80px;
-  background-color: #FFF;
-  box-shadow: 0px -4px 6px 0px #0000000D;
+  background-color: #fff;
+  box-shadow: 0px -4px 6px 0px #0000000d;
   position: fixed;
   bottom: 0px;
   left: 0px;
   display: flex;
   align-items: center;
 }
-.bottom input{
+.bottom input {
   margin: 0px 18px;
   font-size: 18px;
   border: 0;
 }
-.bottom ion-icon{
+.bottom ion-icon {
   width: 26px;
   height: 26px;
   font-size: 26px;
@@ -80,4 +88,56 @@ background-color: #FFDEDE;
 .bottom ::placeholder {
   color: black;
   font-style: italic;
+}
+
+.menu {
+  height: 100vh;
+  display: none;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 1;
+}
+.participants {
+  height: inherit;
+  width: 259px;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  background-color: #FFFFFF;
+}
+.fog {
+  height: inherit;
+  flex-grow: 1;
+  background-color: #00000099;
+}
+.contact-title{
+  width: inherit;
+  display: flex;
+  align-items: center;
+  height: 85px;
+}
+.contact-title p {
+  width: inherit;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+}
+.contact{
+  width: inherit;
+  display: flex;
+  align-items: center;
+  height: 36px;
+  padding: 1px 18px;
+}
+.contact ion-icon{
+  font-size: 25px;
+  width: 28px;
+}
+.contact p{
+  font-size: 16px;
+  text-align: left;
+  margin-left: 20px;
+  width: 100%;
+  flex-grow: 1;
 }

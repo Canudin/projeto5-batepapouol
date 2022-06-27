@@ -4,6 +4,16 @@ const chatRefresh = setInterval(getChat, 3000);
 let statusRefresh = null;
 let chatHtml = document.querySelector(".chat");
 let chatApi = null;
+let msgTo = "Todos";
+let msgType = null;
+let msgText = null;
+let msg = {
+  from: user,
+  to: msgTo,
+  text: msgText,
+  type: msgType,
+};
+let participants = [];
 
 //Start
 getChat();
@@ -46,11 +56,11 @@ function disconnected() {
 //Send Message
 function send() {
   let msgText = document.querySelector("input").value;
-  let msg = {
+  msg = {
     from: user,
-    to: "Todos",
+    to: msgTo,
     text: msgText,
-    type: "message",
+    type: msgType,
   };
   console.log(msg);
   axios.post("https://mock-api.driven.com.br/api/v6/uol/messages", msg);
@@ -73,19 +83,58 @@ function renderChat(getpromise) {
   chatHtml.innerHTML = "";
   chatApi = getpromise.data;
   console.log(getpromise.data);
-
+  participants = [];
   for (n = 0; n < chatApi.length; n++) {
     chatTime = chatApi[n].time;
     chatFrom = chatApi[n].from;
     chatTo = chatApi[n].to;
     chatText = chatApi[n].text;
     chatType = chatApi[n].type;
+    participants.push(chatFrom);
+    renderParticipants();
+
+    if (chatType === "private_message" && (chatTo !== user || chatFrom !== user)) {
+      const lastMessage = document.querySelector(".chat").lastElementChild;
+      lastMessage.scrollIntoView();
+    }
     chatHtml.innerHTML += `
     <div class="${chatType}">
-      ${chatTime} ${chatFrom} to ${chatTo}: ${chatText}
-      </div>
+      <p>
+      <span class="time">${chatTime}</span>
+      <span class="name"> ${chatFrom}</span>
+      to 
+      <span class="name">${chatTo}</span>: ${chatText}
+      </p>
+    </div>  
     `;
     const lastMessage = document.querySelector(".chat").lastElementChild;
     lastMessage.scrollIntoView();
   }
+}
+
+function renderParticipants() {
+  const menuParticipants = document.querySelector(".participants").innerHTML;
+  for (n = 0; n < participants.length; n++) {
+    menuParticipants.innerHTML += `
+    <div class="contact" onclick="msgPrivate()">
+      <ion-icon name="person-circle"></ion-icon>
+      <p>${participants[n]}</p>
+    </div>
+    `;
+  }
+}
+
+function showMenu() {
+  const menuButton = document.querySelector(".menu");
+  menuButton.style.display = "flex";
+}
+function showChat() {
+  const menuButton = document.querySelector(".menu");
+  menuButton.style.display = "none";
+}
+function msgTodos() {
+  msgType = "message";
+}
+function msgPrivate() {
+  msgType = "private_message";
 }
