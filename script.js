@@ -13,7 +13,7 @@ let msg = {
   text: msgText,
   type: msgType,
 };
-let participants = [];
+let participantsPromisse = null;
 
 //Start
 setTimeout(login, 2000);
@@ -82,7 +82,7 @@ function renderChat(getpromise) {
   chatHtml.innerHTML = "";
   chatApi = getpromise.data;
   console.log(getpromise.data);
-  participants = [];
+  getParticipants();
   for (n = 0; n < chatApi.length; n++) {
     chatTime = chatApi[n].time;
     chatFrom = chatApi[n].from;
@@ -110,27 +110,48 @@ function renderChat(getpromise) {
 }
 
 function getParticipants() {
-  const participantsPromisse = axios.get("https://mock-api.driven.com.br/api/v6/uol/participants");
+  participantsPromisse = axios.get("https://mock-api.driven.com.br/api/v6/uol/participants");
   participantsPromisse.then(renderParticipants);
 }
 
 function renderParticipants(answer) {
   const participants = answer.data;
   const menuParticipants = document.querySelector(".participants");
+  menuParticipants.innerHTML = `
+  <div class="contact-title">
+    <p>Escolha um contato para enviar mensagem:</p>
+    </div>
+  <div class="contact" onclick="msgTodos()">
+    <ion-icon name="people"></ion-icon>
+   <p>Todos</p>
+  </div>
+  `;
   for (n = 0; n < participants.length; n++) {
     menuParticipants.innerHTML += `
     <div class="contact" onclick="msgPrivate()">
       <ion-icon name="person-circle"></ion-icon>
-      <p>${participants[n]}</p>
+      <p>${participants[n].name}</p>
     </div>
     `;
   }
+  menuParticipants.innerHTML += `
+  <div class=".visibility-title">
+  <p>Escolha a Visibilidade</p>
+</div>
+<div class="contact" onclick="msgTodos()">
+  <ion-icon name="lock-open"></ion-icon>
+  <p>Público</p>
+</div>
+<div class="contact" onclick="msgPrivate()">
+  <ion-icon name="lock-closed"></ion-icon>
+  <p>Reservadamente</p>
+</div>
+  `;
 }
 
 function showMenu() {
   const menuButton = document.querySelector(".menu");
   menuButton.style.display = "flex";
-  getParticipants();
 }
 function showChat() {
   const menuButton = document.querySelector(".menu");

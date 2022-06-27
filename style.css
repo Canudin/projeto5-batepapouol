@@ -141,3 +141,34 @@
   width: 100%;
   flex-grow: 1;
 }
+.visibility {
+  height: inherit;
+  width: 259px;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  background-color: #FFFFFF;
+}
+.visibility ion-icon{
+  font-size: 25px;
+  width: 28px;
+}
+.visibility p{
+  font-size: 16px;
+  text-align: left;
+  margin-left: 20px;
+  width: 100%;
+  flex-grow: 1;
+}
+.visibility-title{
+  width: inherit;
+  display: flex;
+  align-items: center;
+  height: 85px;
+}
+.visibility-title p {
+  width: inherit;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+}
