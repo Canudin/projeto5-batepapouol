@@ -35,14 +35,16 @@
   font-size: 14px;
   display: flex;
   align-items: center;
+  margin-top: 5px;
+  line-break: anywhere;
 }
-.msg-notify{
+.status{
   background-color: #DCDCDC;
 }
-.msg-standard{
+.message{
   background-color: #FFF;
 }
-.msg-private{
+.private_message{
 background-color: #FFDEDE;
 }
 .msg-notify-self{

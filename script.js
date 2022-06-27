@@ -5,8 +5,10 @@ let statusRefresh = null;
 let chatHtml = document.querySelector(".chat");
 let chatApi = null;
 
-setTimeout(login, 2000);
+//Start
+getChat();
 chatRefresh;
+setTimeout(login, 2000);
 
 //Connection and Reconnection
 function login() {
@@ -68,7 +70,7 @@ let chatText = "";
 let chatType = "";
 
 function renderChat(getpromise) {
-  chatHtml.innertext = "";
+  chatHtml.innerHTML = "";
   chatApi = getpromise.data;
   console.log(getpromise.data);
 
@@ -78,10 +80,12 @@ function renderChat(getpromise) {
     chatTo = chatApi[n].to;
     chatText = chatApi[n].text;
     chatType = chatApi[n].type;
-    chatHtml.innerhtml += `
-    <div class="msg-standard">
-      "${chatTime} ${chatFrom} to ${chatTo}: ${chatText}"
+    chatHtml.innerHTML += `
+    <div class="${chatType}">
+      ${chatTime} ${chatFrom} to ${chatTo}: ${chatText}
       </div>
     `;
+    const lastMessage = document.querySelector(".chat").lastElementChild;
+    lastMessage.scrollIntoView();
   }
 }
